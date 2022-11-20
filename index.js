@@ -4,7 +4,14 @@ const cors = require ("cors");
 const { randomUUID } = require("crypto");
 const app = express();
 const {v4: uuid} = require('uuid')
+// const{PORT, BACKEND_URL}= process.env
 
+
+require('dotenv').config()
+
+const {PORT, BACKEND_URL}= process.env
+console.log(PORT)
+console.log(BACKEND_URL)
 
 app.use (cors ());
 
@@ -46,7 +53,7 @@ app.post("/videos", function (req, res){
         id: uuid(),
         title: req.body.title,
         channel: "Fun channel",
-        image: "",
+        image: "https://i.imgur.com/5qyCZrD.jpg",
         description: req.body.description,
         views: "1,001,023",
         likes: "110,985",
@@ -55,13 +62,11 @@ app.post("/videos", function (req, res){
         timestamp: Date.now(),
         comments: [],
     })
-
         fs.writeFileSync("./data/videos.json", JSON.stringify(parseData))
     }
     console.log(req.body)
     res.send("video added")
 })
-
 
 
 app.get("/videos/:id", function (req, res){
